@@ -1,6 +1,6 @@
 import React, { useState, useReducer } from 'react'
 import {todos, reducerTodo} from "../reducers/reducer";
-
+import '../index.css';
 
   function Todo() { 
     const [todo, setTodo] = useState()
@@ -16,6 +16,14 @@ import {todos, reducerTodo} from "../reducers/reducer";
     setTodo();
  }
 
+ const handleToggle = e => {
+   dispatch({type: 'TOGGLE_TODO', payload: todo.item})
+ }
+
+ const handleDelete = () => {
+  dispatch({type: 'DELETE_TODO', payload: todos})
+}
+
     return (
       <>
       <div>My Todo List</div>
@@ -30,12 +38,12 @@ import {todos, reducerTodo} from "../reducers/reducer";
 </form>
          <div>
              {state.map(todo => (
-                    <p>{todo.item}</p>
+                    <p onClick ={() => dispatch({type:'TOGGLE_TODO', key: todo.id})} className={!todo.completed ?'' : 'toggle' }>{todo.item} {todo.completed && "complete"}</p>
               
              ))}
              </div>
  
-      {/* <button onClick={() => dispatch({ type: 'ADD_TODO' })}>ADD TODO</button> */}
+      <button onClick={() => dispatch({ type: 'DELETE_TODO' })}>Complete TODO</button>
 </>
     )
   }
